@@ -153,6 +153,7 @@ def main(expt_name,
     print("Computing test loss")
     output_map = model.predict(test, return_targets=True)
     targets = data_formatter.format_predictions(output_map["targets"])
+    predicted_values = targets[['forecast_time', 'identifier', 't+0']]
     p50_forecast = data_formatter.format_predictions(output_map["p50"])
     p90_forecast = data_formatter.format_predictions(output_map["p90"])
 
@@ -181,6 +182,19 @@ def main(expt_name,
   print()
   print("Normalised Quantile Loss for Test Data: P50={}, P90={}".format(
       p50_loss.mean(), p90_loss.mean()))
+
+  indexes = predicted_values['identifier'].unique()
+  for indexName in indexes:
+      dataframe_single_index = predicted_values.loc[predicted_values['identifier'] == indexName]
+
+      fixed_indexName = indexName.replace(".", "")
+      output_file_name = 'predictions_of_' + fixed_indexName + ".csv"
+      final_output_dir = os.path.join(model_folder, fixed_indexName)
+      os.mkdir(final_output_dir)
+      dataframe_single_index.to_csv(os.path.join(final_output_dir, output_file_name), index=False)
+
+  # diff tra indexes['t+0'] e test['log_vol'] e plot, salvandoli uno per cartella
+  # utilizzare i propri dati per il training
 
 
 if __name__ == "__main__":
