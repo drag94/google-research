@@ -81,6 +81,10 @@ class GenericDataFormatter(abc.ABC):
   def get_test_boundary(self):
       raise NotImplementedError()
 
+  def get_valid_boundary(self):
+      raise NotImplementedError()
+
+
   def get_test_set(self, df, index, test_boundary):
       raise NotImplementedError()
 
