@@ -49,6 +49,15 @@ ExperimentConfig = expt_settings.configs.ExperimentConfig
 HyperparamOptManager = libs.hyperparam_opt.HyperparamOptManager
 ModelClass = libs.tft_model.TemporalFusionTransformer
 
+# Test set
+indexes_names_true_values_column = 'categorical_id'
+time_column_on_true_values = 'date'
+true_values_column = 'log_vol'
+
+# Output (predicted) data
+indexes_names_predicted_values_column = 'identifier'
+time_column_on_predicted = 'forecast_time'
+predicted_values_column = 't+0'
 
 def main(expt_name,
          use_gpu,
@@ -156,7 +165,7 @@ def main(expt_name,
     print("Computing test loss")
     output_map = model.predict(test, return_targets=True)
     targets = data_formatter.format_predictions(output_map["targets"])
-    predicted_values = targets[['forecast_time', 'identifier', 't+0']]
+    predicted_values = targets[[time_column_on_predicted, indexes_names_predicted_values_column, predicted_values_column]]
     p50_forecast = data_formatter.format_predictions(output_map["p50"])
     p90_forecast = data_formatter.format_predictions(output_map["p90"])
 
@@ -186,13 +195,13 @@ def main(expt_name,
   print("Normalised Quantile Loss for Test Data: P50={}, P90={}".format(
       p50_loss.mean(), p90_loss.mean()))
 
-  indexes = predicted_values['identifier'].unique()
+  indexes = predicted_values[indexes_names_predicted_values_column].unique()
   non_modified_test_set = data_formatter.get_test_set(raw_data, data_formatter.get_index(raw_data), data_formatter.get_test_boundary())
 
   print("Building custom charts")
   for indexName in indexes:
-      dataframe_single_index = predicted_values.loc[predicted_values['identifier'] == indexName]
-      true_values = non_modified_test_set.loc[non_modified_test_set['categorical_id'] == indexName]
+      dataframe_single_index = predicted_values.loc[predicted_values[indexes_names_predicted_values_column] == indexName]
+      true_values = non_modified_test_set.loc[non_modified_test_set[indexes_names_true_values_column] == indexName]
 
       fixed_indexName = indexName.replace(".", "")
       output_file_name = 'predictions_of_' + fixed_indexName + ".csv"
@@ -206,10 +215,10 @@ def main(expt_name,
       ax.xaxis.set_minor_formatter(formatter)
       ax.xaxis.set_major_formatter(formatter)
 
-      plt.plot(np.array(dataframe_single_index['forecast_time'].values, dtype='datetime64'),
-               dataframe_single_index['t+0'].values, 'r:', linewidth=1, label='Predicted data')
-      plt.plot(np.array(true_values['date'].values, dtype='datetime64'),
-               true_values['log_vol'].values, 'b:', linewidth=1, label='True data')
+      plt.plot(np.array(dataframe_single_index[time_column_on_predicted].values, dtype='datetime64'),
+               dataframe_single_index[predicted_values_column].values, 'r:', linewidth=1, label='Predicted data')
+      plt.plot(np.array(true_values[time_column_on_true_values].values, dtype='datetime64'),
+               true_values[true_values_column].values, 'b:', linewidth=1, label='True data')
 
       plot_name = 'true_vs_predicted_' + fixed_indexName
       output_plot_location = os.path.join(final_output_dir, plot_name + '.png')
