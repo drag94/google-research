@@ -78,6 +78,15 @@ class GenericDataFormatter(abc.ABC):
     """Performs the default train, validation and test splits."""
     raise NotImplementedError()
 
+  def get_test_boundary(self):
+      raise NotImplementedError()
+
+  def get_test_set(self, df, index, test_boundary):
+      raise NotImplementedError()
+
+  def get_index(self, df):
+      raise NotImplementedError()
+
   @property
   @abc.abstractmethod
   def _column_definition(self):

@@ -59,7 +59,10 @@ class VolatilityFormatter(GenericDataFormatter):
     self._target_scaler = None
     self._num_classes_per_cat_input = None
 
-  def split_data(self, df, valid_boundary=2016, test_boundary=2018):
+  def get_test_boundary(self):
+      return 2018
+
+  def split_data(self, df, valid_boundary=2016):
     """Splits data frame into training-validation-test data frames.
 
     This also calibrates scaling object, and transforms data for each split.
@@ -75,14 +78,21 @@ class VolatilityFormatter(GenericDataFormatter):
 
     print('Formatting train-valid-test splits.')
 
-    index = df['year']
+    test_boundary = self.get_test_boundary()
+    index = self.get_index(df)
     train = df.loc[index < valid_boundary]
     valid = df.loc[(index >= valid_boundary) & (index < test_boundary)]
-    test = df.loc[index >= test_boundary]
+    test = self.get_test_set(df, index, test_boundary)
 
     self.set_scalers(train)
 
     return (self.transform_inputs(data) for data in [train, valid, test])
+
+  def get_index(self, df):
+      return df['year']
+
+  def get_test_set(self, df, index, test_boundary):
+      return df.loc[index >= test_boundary]
 
   def set_scalers(self, df):
     """Calibrates scalers using the data supplied.

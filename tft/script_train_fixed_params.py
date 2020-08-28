@@ -41,6 +41,9 @@ import libs.utils as utils
 import numpy as np
 import pandas as pd
 import tensorflow.compat.v1 as tf
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import pickle
 
 ExperimentConfig = expt_settings.configs.ExperimentConfig
 HyperparamOptManager = libs.hyperparam_opt.HyperparamOptManager
@@ -184,18 +187,49 @@ def main(expt_name,
       p50_loss.mean(), p90_loss.mean()))
 
   indexes = predicted_values['identifier'].unique()
+  non_modified_test_set = data_formatter.get_test_set(raw_data, data_formatter.get_index(raw_data), data_formatter.get_test_boundary())
+
+  print("Building custom charts")
   for indexName in indexes:
       dataframe_single_index = predicted_values.loc[predicted_values['identifier'] == indexName]
+      true_values = non_modified_test_set.loc[non_modified_test_set['categorical_id'] == indexName]
 
       fixed_indexName = indexName.replace(".", "")
       output_file_name = 'predictions_of_' + fixed_indexName + ".csv"
       final_output_dir = os.path.join(model_folder, fixed_indexName)
-      os.mkdir(final_output_dir)
+      os.makedirs(final_output_dir, exist_ok=True)
       dataframe_single_index.to_csv(os.path.join(final_output_dir, output_file_name), index=False)
 
-  # diff tra indexes['t+0'] e test['log_vol'] e plot, salvandoli uno per cartella
+      # Plot
+      fig, ax = plt.subplots(figsize=cm2inch(35, 35), dpi=200)
+      formatter = mdates.DateFormatter('%Y-%m')
+      ax.xaxis.set_minor_formatter(formatter)
+      ax.xaxis.set_major_formatter(formatter)
+
+      plt.plot(np.array(dataframe_single_index['forecast_time'].values, dtype='datetime64'),
+               dataframe_single_index['t+0'].values, 'r:', linewidth=1, label='Predicted data')
+      plt.plot(np.array(true_values['date'].values, dtype='datetime64'),
+               true_values['log_vol'].values, 'b:', linewidth=1, label='True data')
+
+      plot_name = 'true_vs_predicted_' + fixed_indexName
+      output_plot_location = os.path.join(final_output_dir, plot_name + '.png')
+
+      ax.legend(loc='upper right')
+      plt.savefig(output_plot_location, bbox_inches='tight')
+
+      pickle.dump(fig, open(os.path.join(final_output_dir, 'Interactive_' + plot_name + '.pickle'), 'wb'))
+      plt.close(fig)
+
+  print("Finished building custom charts")
+
   # utilizzare i propri dati per il training
 
+def cm2inch(*tupl):
+    inch = 2.54
+    if isinstance(tupl[0], tuple):
+        return tuple(i / inch for i in tupl[0])
+    else:
+        return tuple(i / inch for i in tupl)
 
 if __name__ == "__main__":
 
