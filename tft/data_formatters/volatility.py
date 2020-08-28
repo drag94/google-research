@@ -80,7 +80,7 @@ class VolatilityFormatter(GenericDataFormatter):
   def get_test_boundary(self):
       return 2018
 
-  def split_data(self, df, valid_boundary=2016):
+  def split_data(self, df, valid_boundary=2016): # Todo change as get_test_boundary
     """Splits data frame into training-validation-test data frames.
 
     This also calibrates scaling object, and transforms data for each split.
