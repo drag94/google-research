@@ -231,8 +231,6 @@ def main(expt_name,
 
   print("Finished building custom charts")
 
-  # utilizzare i propri dati per il training
-
 def cm2inch(*tupl):
     inch = 2.54
     if isinstance(tupl[0], tuple):

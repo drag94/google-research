@@ -125,3 +125,8 @@ figx = pickle.load(open(<file_location>.pickle, 'rb'))
 
 figx.show() # Show the figure, edit it, etc.!
 ```
+
+# TODO
+- Seguire tutorial su come utilizzare dati custom
+- Lanciare script `script_hyperparam_opt` (e non fixed_params) per il training
+  - Prima di fare questo, però, dovrai mettere il codice scritto in `script_train_fixed_params.py` in `script_hyperparam_opt.py` (ad esempio tutto il codice per i chart) 
