@@ -49,16 +49,6 @@ ExperimentConfig = expt_settings.configs.ExperimentConfig
 HyperparamOptManager = libs.hyperparam_opt.HyperparamOptManager
 ModelClass = libs.tft_model.TemporalFusionTransformer
 
-# Test set
-indexes_names_true_values_column = 'categorical_id'
-time_column_on_true_values = 'date'
-true_values_column = 'log_vol'
-
-# Output (predicted) data
-indexes_names_predicted_values_column = 'identifier'
-time_column_on_predicted = 'forecast_time'
-predicted_values_column = 't+0'
-
 def main(expt_name,
          use_gpu,
          model_folder,
@@ -161,6 +151,16 @@ def main(expt_name,
 
     print("Computing best validation loss")
     val_loss = model.evaluate(valid)
+
+    # Test set
+    indexes_names_true_values_column = data_formatter.get_indexes_names_true_values_columns()
+    time_column_on_true_values = data_formatter.get_time_column_on_true_values()
+    true_values_column = data_formatter.get_true_values_column()
+
+    # Output (predicted) data
+    indexes_names_predicted_values_column = data_formatter.get_indexes_names_predicted_values_column()
+    time_column_on_predicted = data_formatter.get_time_column_on_predicted()
+    predicted_values_column = data_formatter.get_predicted_values_column()
 
     print("Computing test loss")
     output_map = model.predict(test, return_targets=True)

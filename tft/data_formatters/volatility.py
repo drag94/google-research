@@ -59,6 +59,24 @@ class VolatilityFormatter(GenericDataFormatter):
     self._target_scaler = None
     self._num_classes_per_cat_input = None
 
+  def get_indexes_names_true_values_columns(self):
+      return 'categorical_id'
+
+  def get_time_column_on_true_values(self):
+      return 'date'
+
+  def get_true_values_column(self):
+      return 'log_vol'
+
+  def get_indexes_names_predicted_values_column(self):
+      return 'identifier'
+
+  def get_time_column_on_predicted(self):
+      return 'forecast_time'
+
+  def get_predicted_values_column(self):
+      return 't+0'
+
   def get_test_boundary(self):
       return 2018
 

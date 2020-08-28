@@ -87,6 +87,24 @@ class GenericDataFormatter(abc.ABC):
   def get_index(self, df):
       raise NotImplementedError()
 
+  def get_indexes_names_true_values_columns(self):
+      raise NotImplementedError()
+
+  def get_time_column_on_true_values(self):
+      raise NotImplementedError()
+
+  def get_true_values_column(self):
+      raise NotImplementedError()
+
+  def get_indexes_names_predicted_values_column(self):
+      raise NotImplementedError()
+
+  def get_time_column_on_predicted(self):
+      raise NotImplementedError()
+
+  def get_predicted_values_column(self):
+      raise NotImplementedError()
+
   @property
   @abc.abstractmethod
   def _column_definition(self):
