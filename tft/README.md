@@ -114,3 +114,14 @@ Full hyperparameter optimization can then be run as per the previous section, e.
 python3 -m script_hyperparam_opt example . yes yes
 
 ```
+
+### Show charts interactively
+
+From the python shell:
+
+```python
+import pickle
+figx = pickle.load(open(<file_location>.pickle, 'rb'))
+
+figx.show() # Show the figure, edit it, etc.!
+```
