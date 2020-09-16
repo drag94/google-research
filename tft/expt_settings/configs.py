@@ -43,7 +43,7 @@ class ExperimentConfig(object):
       experiment.
   """
 
-  default_experiments = ['volatility', 'electricity', 'traffic', 'favorita', 'bloomberg']
+  default_experiments = ['volatility', 'electricity', 'traffic', 'favorita', 'bloomberg', 'Volatilità_aggiornato']
 
   def __init__(self, experiment='volatility', root_folder=None):
     """Creates configs based on default experiment chosen.
@@ -84,6 +84,7 @@ class ExperimentConfig(object):
         'traffic': 'hourly_data.csv',
         'favorita': 'favorita_consolidated.csv',
         'bloomberg': "input_bloomberg_data.csv"
+        'Volatilità_aggiornato': "oxfordman_aggiornato.csv" #questo è l'entry nuova
     }
 
     return os.path.join(self.data_folder, csv_map[self.experiment])
@@ -106,6 +107,7 @@ class ExperimentConfig(object):
         'traffic': data_formatters.traffic.TrafficFormatter,
         'favorita': data_formatters.favorita.FavoritaFormatter,
         'bloomberg': data_formatters.bloomberg.BloombergFormatter
+        'Volatilità_aggiornato': data_formatters.Volatilità_aggiornato.Volatilità_aggiornato_Formatter #aggiunto qui
     }
 
     return data_formatter_class[self.experiment]()

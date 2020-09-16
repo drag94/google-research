@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/davide/Documents/google-research/tft/outputdati/saved_models/volatility/fixed/TemporalFusionTransformer.ckpt"
+all_model_checkpoint_paths: "/home/davide/Documents/google-research/tft/outputdati/saved_models/volatility/fixed/TemporalFusionTransformer.ckpt"
