@@ -27,7 +27,7 @@ import data_formatters.favorita
 import data_formatters.traffic
 import data_formatters.volatility
 import data_formatters.bloomberg
-
+import data_formatters.Volatilità_aggiornato
 
 class ExperimentConfig(object):
   """Defines experiment configs and paths to outputs.
