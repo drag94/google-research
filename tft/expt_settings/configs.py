@@ -83,8 +83,8 @@ class ExperimentConfig(object):
         'electricity': 'hourly_electricity.csv',
         'traffic': 'hourly_data.csv',
         'favorita': 'favorita_consolidated.csv',
-        'bloomberg': "input_bloomberg_data.csv"
-        'Volatilità_aggiornato': "oxfordman_aggiornato.csv" #questo è l'entry nuova
+        'bloomberg': "input_bloomberg_data.csv",
+        'Volatilità_aggiornato':"oxfordman_aggiornato.csv"#questo è l'entry nuova
     }
 
     return os.path.join(self.data_folder, csv_map[self.experiment])
@@ -106,7 +106,7 @@ class ExperimentConfig(object):
         'electricity': data_formatters.electricity.ElectricityFormatter,
         'traffic': data_formatters.traffic.TrafficFormatter,
         'favorita': data_formatters.favorita.FavoritaFormatter,
-        'bloomberg': data_formatters.bloomberg.BloombergFormatter
+        'bloomberg': data_formatters.bloomberg.BloombergFormatter,
         'Volatilità_aggiornato': data_formatters.Volatilità_aggiornato.Volatilità_aggiornato_Formatter #aggiunto qui
     }
 
