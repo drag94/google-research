@@ -84,15 +84,14 @@ class ExperimentConfig(object):
         'traffic': 'hourly_data.csv',
         'favorita': 'favorita_consolidated.csv',
         'bloomberg': "input_bloomberg_data.csv",
-        'Volatilità_aggiornato':'oxfordman_aggiornato.csv' #questo è l'entry nuova
+        'Volatilità_aggiornato':"oxfordman_aggiornato.csv" #questo è l'entry nuova
     }
 
     return os.path.join(self.data_folder, csv_map[self.experiment])
-
   @property
   def hyperparam_iterations(self):
 
-    return 240 if self.experiment == 'volatility' else 60
+   return 240 if self.experiment == 'volatility' else 60
 
   def make_data_formatter(self):
     """Gets a data formatter object for experiment.
