@@ -18,14 +18,16 @@
 Contains the default output paths for data, serialised models and predictions
 for the main experiments used in the publication.
 """
+import data_formatters.base
+
+GenericDataFormatter = data_formatters.base.GenericDataFormatter
+DataTypes = data_formatters.base.DataTypes
+InputTypes = data_formatters.base.InputTypes
 
 import os
 
-import data_formatters.electricity
-import data_formatters.favorita
-import data_formatters.traffic
-import data_formatters.volatility
-import data_formatters.Volatilità_aggiornato
+import data_formatters.base
+
 
 
 class ExperimentConfig(object):

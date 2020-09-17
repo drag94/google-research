@@ -137,9 +137,20 @@ def main(expt_name, use_gpu, restart_opt, model_folder, hyperparam_iterations,
     print("Computing best validation loss")
     val_loss = model.evaluate(valid)
 
+    # Test set
+    indexes_names_true_values_column = data_formatter.get_indexes_names_true_values_columns()
+    time_column_on_true_values = data_formatter.get_time_column_on_true_values()
+    true_values_column = data_formatter.get_true_values_column()
+
+    # Output (predicted) data
+    indexes_names_predicted_values_column = data_formatter.get_indexes_names_predicted_values_column()
+    time_column_on_predicted = data_formatter.get_time_column_on_predicted()
+    predicted_values_column = data_formatter.get_predicted_values_column()
+
     print("Computing test loss")
     output_map = model.predict(test, return_targets=True)
     targets = data_formatter.format_predictions(output_map["targets"])
+    predicted_values = targets[[time_column_on_predicted, indexes_names_predicted_values_column, predicted_values_column]]
     p50_forecast = data_formatter.format_predictions(output_map["p50"])
     p90_forecast = data_formatter.format_predictions(output_map["p90"])
 
