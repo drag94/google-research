@@ -15,7 +15,6 @@
 
 # Lint as: python3
 """Default configs for TFT experiments.
-
 Contains the default output paths for data, serialised models and predictions
 for the main experiments used in the publication.
 """
@@ -26,12 +25,11 @@ import data_formatters.electricity
 import data_formatters.favorita
 import data_formatters.traffic
 import data_formatters.volatility
-import data_formatters.bloomberg
 import data_formatters.Volatilità_aggiornato
+
 
 class ExperimentConfig(object):
   """Defines experiment configs and paths to outputs.
-
   Attributes:
     root_folder: Root folder to contain all experimental outputs.
     experiment: Name of experiment to run.
@@ -43,11 +41,10 @@ class ExperimentConfig(object):
       experiment.
   """
 
-  default_experiments = ['volatility', 'electricity', 'traffic', 'favorita', 'bloomberg', 'Volatilità_aggiornato']
+  default_experiments = ['volatility', 'electricity', 'traffic', 'favorita', 'Volatilità_aggiornato']
 
   def __init__(self, experiment='volatility', root_folder=None):
     """Creates configs based on default experiment chosen.
-
     Args:
       experiment: Name of experiment.
       root_folder: Root folder to save all outputs of training.
@@ -83,19 +80,18 @@ class ExperimentConfig(object):
         'electricity': 'hourly_electricity.csv',
         'traffic': 'hourly_data.csv',
         'favorita': 'favorita_consolidated.csv',
-        'bloomberg': "input_bloomberg_data.csv", #non implementato
-        'Volatilità_aggiornato':'oxfordman_aggiornato.csv' #questo è l'entry nuova
+        'Volatilità_aggiornato': 'oxfordman_aggiornato.csv'  # questo è l'entry nuova
     }
 
     return os.path.join(self.data_folder, csv_map[self.experiment])
+
   @property
   def hyperparam_iterations(self):
 
-   return 240 if self.experiment == 'volatility' else 60
+    return 240 if self.experiment == 'volatility' else 60
 
   def make_data_formatter(self):
     """Gets a data formatter object for experiment.
-
     Returns:
       Default DataFormatter per experiment.
     """
@@ -105,8 +101,7 @@ class ExperimentConfig(object):
         'electricity': data_formatters.electricity.ElectricityFormatter,
         'traffic': data_formatters.traffic.TrafficFormatter,
         'favorita': data_formatters.favorita.FavoritaFormatter,
-        'bloomberg': data_formatters.bloomberg.BloombergFormatter,
-        'Volatilità_aggiornato': data_formatters.Volatilità_aggiornato.Volatilità_aggiornato_Formatter #aggiunto qui
+        'Volatilità_aggiornato': data_formatters.Volatilità_aggiornato.Volatilità_aggiornato_Formatter  # aggiunto qui
     }
 
     return data_formatter_class[self.experiment]()
