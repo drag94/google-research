@@ -83,8 +83,8 @@ class ExperimentConfig(object):
         'electricity': 'hourly_electricity.csv',
         'traffic': 'hourly_data.csv',
         'favorita': 'favorita_consolidated.csv',
-        'bloomberg': "input_bloomberg_data.csv",
-        'Volatilità_aggiornato':"oxfordman_aggiornato.csv" #questo è l'entry nuova
+        'bloomberg': "input_bloomberg_data.csv", #non implementato
+        'Volatilità_aggiornato':'oxfordman_aggiornato.csv' #questo è l'entry nuova
     }
 
     return os.path.join(self.data_folder, csv_map[self.experiment])
