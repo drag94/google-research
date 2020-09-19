@@ -221,7 +221,7 @@ class VolatilityFormatter(GenericDataFormatter):
     """Returns fixed model parameters for experiments."""
 
     fixed_params = {
-        'total_time_steps': 252 + 5, #252 + 5 originale
+        'total_time_steps': 252 + 25, #252 + 5 originale
         'num_encoder_steps': 252,   #252 originale
         'num_epochs': 100,
         'early_stopping_patience': 5,
