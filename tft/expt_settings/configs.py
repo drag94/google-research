@@ -75,11 +75,11 @@ class ExperimentConfig(object):
   @property
   def data_csv_path(self):
     csv_map = {
-        'volatility': 'formatted_omi_vol.csv',
+        'volatility': 'formatted_omi_vol.csv', #il problema è il file dei dati: RISOLVI
         'electricity': 'hourly_electricity.csv',
         'traffic': 'hourly_data.csv',
-        'favorita': 'favorita_consolidated.csv',
-        }
+        'favorita': 'favorita_consolidated.csv'
+    }
 
     return os.path.join(self.data_folder, csv_map[self.experiment])
 
@@ -98,7 +98,7 @@ class ExperimentConfig(object):
         'volatility': data_formatters.volatility.VolatilityFormatter,
         'electricity': data_formatters.electricity.ElectricityFormatter,
         'traffic': data_formatters.traffic.TrafficFormatter,
-        'favorita': data_formatters.favorita.FavoritaFormatter,
-        }
+        'favorita': data_formatters.favorita.FavoritaFormatter
+    }
 
     return data_formatter_class[self.experiment]()
