@@ -1,4 +1,4 @@
-# Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting
+# Hands-on Temporal Fusion Transformers for Time Series Forecasting
 
 To check the performances of this neural network, check the file Results_with_graphs_risultati
 
