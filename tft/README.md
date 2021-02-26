@@ -1,6 +1,6 @@
 # Hands-on Temporal Fusion Transformers for Time Series Forecasting
 
-To check the performances of this neural network, check the file Results_with_graphs_risultati(https://github.com/drag94/google-research/blob/custom_dataset/tft/Results_with_graphs_risultati.pdf)
+To check the performances of this neural network, check the file [Results_with_graphs_risultati](https://github.com/drag94/google-research/blob/custom_dataset/tft/Results_with_graphs_risultati.pdf)
 
 
 
